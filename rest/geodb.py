@@ -5,7 +5,7 @@ import urllib
 import csv
 
 from models.offices import Offices
-from numpy import genfromtxt
+#from numpy import genfromtxt
 from sqlalchemy.pool import StaticPool
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import event, create_engine, MetaData
