@@ -57,7 +57,7 @@ def init_db():
 
     logging.info("Mapping values in Offices")
 
-    for item in data.tolist():
+    for item in data:
         office = Offices(
             desc = item[0],
             address = item[1],
