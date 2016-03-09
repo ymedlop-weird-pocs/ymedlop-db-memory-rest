@@ -28,10 +28,11 @@ def connect(dbapi_connection, notused):
     dbapi_connection.enable_load_extension(True)
     dbapi_connection.execute("SELECT load_extension('libspatialite.so');")
 
+
 def init_db():
 
     logging.info ("Downloading data!!")
-    urllib.urlretrieve ("https://storage.googleapis.com/ymedlop-memory-db-demo/mocks/offices.txt", "offices.txt")
+    urllib.urlretrieve ("https://storage.googleapis.com/ymedlop-memory-db-demo/mocks/oficinas.csv", "oficinas.csv")
 
     logging.info ("Initializating the application!!")
 
@@ -44,8 +45,8 @@ def init_db():
 
     logging.info("Loading values in Offices file")
     data = genfromtxt(
-        'offices.txt',
-        delimiter='|',
+        'oficinas.csv',
+        delimiter=',',
         dtype= None,
         converters={0: lambda s: str(s)} # Problem Encoding es_ES
     )
@@ -54,15 +55,16 @@ def init_db():
 
     for item in data.tolist():
         office = Offices(
-            desc = item[1],
-            address = item[2],
-            location = item[3],
-            beautiful_location = item[3]
+            desc = item[0],
+            address = item[1],
+            location = 'POINT({0} {1})'.format(item[2], item[3]),
+            beautiful_location = 'POINT({0} {1})'.format(item[2], item[3])
         )
         session.add(office)
 
     logging.info("Inserting values in Offices")
     session.commit()
+
 
 def get_all():
 
