@@ -83,12 +83,13 @@ def near(lat, lng, radius):
 
     list = []
     point = WKTSpatialElement('POINT({0} {1})'.format(lat, lng))
+    offices_point = WKTSpatialElement(Offices.beautiful_location)
 
     logging.info("Doing search with %s" % 'POINT({0} {1})'.format(lat, lng))
     logging.info("And Radius %s" % radius)
 
     session = sessionmaker(bind=engine)()
-    query = session.query(Offices).filter(functions._within_distance(point, Offices.location, radius))
+    query = session.query(Offices).filter(functions._within_distance(offices_point, point, radius))
 
     # TODO: https://marshmallow.readthedocs.org/en/latest/nesting.html
     for office in query:
