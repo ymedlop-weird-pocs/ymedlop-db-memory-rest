@@ -71,8 +71,8 @@ class nearHandler(Resource):
     def get(self):
 
         code = 200
-        lng = request.args.get('lng', 33.453145)
         lat = request.args.get('lat', 42.3251855)
+        lng = request.args.get('lng', 33.453145)
         radius = request.args.get('radius', None)
 
         if lat and lng and radius:

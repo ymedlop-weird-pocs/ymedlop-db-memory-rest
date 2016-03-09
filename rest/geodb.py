@@ -82,9 +82,9 @@ def get_all():
 def near(lat, lng, radius):
 
     list = []
-    point = WKTSpatialElement('POINT({0} {1})'.format(lat, lng), 4326)
+    point = WKTSpatialElement('POINT({0} {1})'.format(lat, lng))
 
-    logging.info("Doing search with %s" % 'POINT({0} {1})'.format(lng, lat))
+    logging.info("Doing search with %s" % 'POINT({0} {1})'.format(lat, lng))
     logging.info("And Radius %s" % radius)
 
     session = sessionmaker(bind=engine)()
