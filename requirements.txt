@@ -1,0 +1,4 @@
+flask-restplus
+numpy
+SQLAlchemy==0.8.4
+GeoAlchemy==0.7.2
