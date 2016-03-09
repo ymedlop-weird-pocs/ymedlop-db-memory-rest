@@ -6,7 +6,6 @@ from urllib2 import urlopen
 import csv
 
 from models.offices import Offices
-#from numpy import genfromtxt
 from sqlalchemy.pool import StaticPool
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import event, create_engine, MetaData
@@ -46,14 +45,6 @@ def init_db():
     Offices.__table__.create(engine)
 
     logging.info("Loading values in Offices file")
-    """
-    data = genfromtxt(
-        'oficinas.csv',
-        delimiter=',',
-        dtype= None,
-        converters={0: lambda s: str(s)} # Problem Encoding es_ES
-    )
-    """
     data = csv.reader(myreq.splitlines(), delimiter=',')
 
     logging.info("Mapping values in Offices")
@@ -91,7 +82,7 @@ def get_all():
 def near(lat, lng, radius):
 
     list = []
-    point = WKTSpatialElement('POINT({0} {1})'.format(lng, lat), 4326)
+    point = WKTSpatialElement('POINT({0} {1})'.format(lat, lng), 4326)
 
     logging.info("Doing search with %s" % 'POINT({0} {1})'.format(lng, lat))
     logging.info("And Radius %s" % radius)
