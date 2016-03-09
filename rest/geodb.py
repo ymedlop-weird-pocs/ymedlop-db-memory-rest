@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import logging
-import urllib
+from urllib2 import urlopen
 import csv
 
 from models.offices import Offices
@@ -33,7 +33,7 @@ def connect(dbapi_connection, notused):
 def init_db():
 
     logging.info ("Downloading data!!")
-    myreq = urllib.urlretrieve ("https://storage.googleapis.com/ymedlop-memory-db-demo/mocks/oficinas.csv").read()
+    myreq = urlopen("https://storage.googleapis.com/ymedlop-memory-db-demo/mocks/oficinas.csv").read()
 
     logging.info ("Initializating the application!!")
 
