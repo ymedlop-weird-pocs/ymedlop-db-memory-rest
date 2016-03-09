@@ -16,6 +16,6 @@ RUN pip install  -U -r /tmp/requirements.txt
 ADD rest /tmp/rest
 WORKDIR /tmp/rest
 
-EXPOSE 8080
+EXPOSE 5000
 
 CMD ["python", "main.py"]

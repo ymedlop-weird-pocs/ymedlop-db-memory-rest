@@ -115,7 +115,7 @@ class nearHandler(Resource):
 
 if __name__ == '__main__':
 
-    PORT = os.getenv("PORT", 8080)
+    PORT = os.getenv("PORT", 5000)
 
     logging.info("Starting server!!!")
     app.run(host="0.0.0.0", port=PORT, debug=False)
