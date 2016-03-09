@@ -2,6 +2,7 @@
 
 import logging
 import urllib
+import csv
 
 from models.offices import Offices
 from numpy import genfromtxt
@@ -32,7 +33,7 @@ def connect(dbapi_connection, notused):
 def init_db():
 
     logging.info ("Downloading data!!")
-    urllib.urlretrieve ("https://storage.googleapis.com/ymedlop-memory-db-demo/mocks/oficinas.csv", "oficinas.csv")
+    myreq = urllib.urlretrieve ("https://storage.googleapis.com/ymedlop-memory-db-demo/mocks/oficinas.csv").read()
 
     logging.info ("Initializating the application!!")
 
@@ -44,12 +45,15 @@ def init_db():
     Offices.__table__.create(engine)
 
     logging.info("Loading values in Offices file")
+    """
     data = genfromtxt(
         'oficinas.csv',
         delimiter=',',
         dtype= None,
         converters={0: lambda s: str(s)} # Problem Encoding es_ES
     )
+    """
+    data = csv.reader(myreq.splitlines(), delimiter=',')
 
     logging.info("Mapping values in Offices")
 
