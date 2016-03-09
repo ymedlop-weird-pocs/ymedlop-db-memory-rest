@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 import logging
@@ -60,7 +61,7 @@ def init_db():
     for item in data:
         office = Offices(
             desc = item[0],
-            address = item[1],
+            address = item[1].decode('utf-8'),
             location = 'POINT({0} {1})'.format(item[2], item[3]),
             beautiful_location = 'POINT({0} {1})'.format(item[2], item[3])
         )
