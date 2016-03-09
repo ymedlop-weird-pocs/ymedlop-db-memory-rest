@@ -86,8 +86,7 @@ class nearHandler(Resource):
                     "count": len(offices),
                     "list": offices,
                     "parameters": {
-                        "lat": lat,
-                        "lng": lng,
+                        "coords": 'POINT({0} {1})'.format(lat, lng),
                         "radius": radius
                     }
                 }

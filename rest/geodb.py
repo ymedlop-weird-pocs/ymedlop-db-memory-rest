@@ -88,7 +88,7 @@ def near(lat, lng, radius):
     logging.info("And Radius %s" % radius)
 
     session = sessionmaker(bind=engine)()
-    query = session.query(Offices).filter(functions._within_distance(Offices.location, point, radius))
+    query = session.query(Offices).filter(functions._within_distance(point, Offices.location, radius))
 
     # TODO: https://marshmallow.readthedocs.org/en/latest/nesting.html
     for office in query:
