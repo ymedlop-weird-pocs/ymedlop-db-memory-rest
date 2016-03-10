@@ -51,10 +51,10 @@ def init_db():
 
     for item in data:
         office = Offices(
-            desc = item[0],
-            address = item[1].decode('utf-8'),
-            location = 'POINT({0} {1})'.format(item[2], item[3]),
-            beautiful_location = 'POINT({0} {1})'.format(item[2], item[3])
+            desc=item[0],
+            address=item[1].decode('utf-8'),
+            location='POINT({0} {1})'.format(item[2], item[3]),
+            beautiful_location='POINT({0} {1})'.format(item[2], item[3])
         )
         session.add(office)
 
@@ -79,17 +79,16 @@ def get_all():
     return list
 
 
-def near(lat, lng, radius):
+def near(lat, lng, distance):
 
     list = []
     point = WKTSpatialElement('POINT({0} {1})'.format(lat, lng))
-    offices_point = WKTSpatialElement(Offices.beautiful_location)
 
     logging.info("Doing search with %s" % 'POINT({0} {1})'.format(lat, lng))
-    logging.info("And Radius %s" % radius)
+    logging.info("And distance %s" % distance)
 
     session = sessionmaker(bind=engine)()
-    query = session.query(Offices).filter(functions._within_distance(offices_point, point, radius))
+    query = session.query(Offices).filter(functions._within_distance(Offices.location, point, distance))
 
     # TODO: https://marshmallow.readthedocs.org/en/latest/nesting.html
     for office in query:

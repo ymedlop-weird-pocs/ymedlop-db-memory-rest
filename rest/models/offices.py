@@ -13,7 +13,7 @@ class Offices(Base):
     id = Column(Integer, primary_key=True)
     desc = Column(String(255))
     address = Column(String(255))
-    location = GeometryColumn(Point(2, srid=4326, spatial_index=True), comparator = SQLiteComparator)
+    location = GeometryColumn(Point(2, srid=4326, spatial_index=True), comparator=SQLiteComparator)
     beautiful_location = Column(String(255))
 
 GeometryDDL(Offices.__table__)

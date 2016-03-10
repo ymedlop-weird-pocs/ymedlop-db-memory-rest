@@ -63,7 +63,7 @@ class listHandler(Resource):
 parser = api.parser()
 parser.add_argument('lat', type=int, help='Latitude', location='query')
 parser.add_argument('lng', type=int, help='Longitude', location='query')
-parser.add_argument('radius', type=int, help='Radius', location='query')
+parser.add_argument('distance', type=int, help='distance', location='query')
 
 @api.route('/near', methods=['GET'])
 class nearHandler(Resource):
@@ -73,13 +73,13 @@ class nearHandler(Resource):
         code = 200
         lat = request.args.get('lat', None)
         lng = request.args.get('lng', None)
-        radius = request.args.get('radius', None)
+        distance = request.args.get('distance', None)
 
-        if lat and lng and radius:
+        if lat and lng and distance:
 
             try:
 
-                offices = near(lat, lng, radius)
+                offices = near(lat, lng, distance)
 
                 result = {
                     "status": "OK" ,
@@ -87,7 +87,7 @@ class nearHandler(Resource):
                     "list": offices,
                     "parameters": {
                         "coords": 'POINT({0} {1})'.format(lat, lng),
-                        "radius": radius
+                        "distance": distance
                     }
                 }
 
