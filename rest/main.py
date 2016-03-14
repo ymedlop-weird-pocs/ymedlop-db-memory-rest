@@ -46,9 +46,9 @@ class listHandler(Resource):
                 "list": offices
             }
 
-        except BaseException:
+        except BaseException, ex:
 
-            logging.info("Unable to connect to sqllite with provided connection details.")
+            logging.info("Unable to connect to sqllite with provided connection details %s." % ex)
             code = 500
             result = {
                 "message": "sqllite is not working!!!",

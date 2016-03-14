@@ -50,13 +50,21 @@ def init_db():
     logging.info("Mapping values in Offices")
 
     for item in data:
-        office = Offices(
-            desc=item[0],
-            address=item[1].decode('utf-8'),
-            location='POINT({0} {1})'.format(item[2], item[3]),
-            beautiful_location='POINT({0} {1})'.format(item[2], item[3])
-        )
-        session.add(office)
+
+        if item[2] == "" or item[2] == "":
+
+            logging.info("Coords problem %s" % item)
+
+        else:
+
+            office = Offices(
+                desc=item[0],
+                address=item[1].decode('utf-8'),
+                location='POINT({0} {1})'.format(item[2], item[3]),
+                lat=float(item[2]),
+                lng=float(item[3])
+            )
+            session.add(office)
 
     logging.info("Inserting values in Offices")
     session.commit()
@@ -69,11 +77,13 @@ def get_all():
     list = []
 
     # TODO: https://marshmallow.readthedocs.org/en/latest/nesting.html
-    for office in session.query(Offices):
+    for office in session.query(Offices).order_by(Offices.location):
         list.append({
+            "id": office.id,
             "desc": office.desc,
             "address": office.address,
-            "location": office.beautiful_location
+            "latitude": office.lat,
+            "longitude": office.lng
         })
 
     return list
@@ -88,14 +98,16 @@ def near(lat, lng, distance):
     logging.info("And distance %s" % distance)
 
     session = sessionmaker(bind=engine)()
-    query = session.query(Offices).filter(functions._within_distance(Offices.location, point, distance))
+    query = session.query(Offices).filter(functions._within_distance(Offices.location, point, distance)).order_by(Offices.location)
 
     # TODO: https://marshmallow.readthedocs.org/en/latest/nesting.html
     for office in query:
         list.append({
+            "id": office.id,
             "desc": office.desc,
             "address": office.address,
-            "location": office.beautiful_location
+            "latitude": office.lat,
+            "longitude": office.lng
         })
 
     return list
