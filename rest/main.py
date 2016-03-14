@@ -101,11 +101,26 @@ class nearHandler(Resource):
                 }
 
         else:
-            code = 500
-            result = {
-                "message": "Missing fields!!!",
-                "status": "KO"
-            }
+
+            try:
+
+                offices = get_all()
+
+                result = {
+                    "message": "Missing fields!!!",
+                    "status": "OK",
+                    "count": len(offices),
+                    "list": offices
+                }
+
+            except BaseException, ex:
+
+                logging.info("Unable to connect to sqllite with provided connection details %s." % ex)
+                code = 500
+                result = {
+                    "message": "sqllite is not working!!!",
+                    "status": "KO"
+                }
 
         resp = make_response(json.dumps(result), code)
         resp.headers['Content-Type'] = 'application/json'
